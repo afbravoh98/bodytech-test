@@ -2,21 +2,21 @@
 
 namespace App\bodytech\Storage;
 
-use App\Models\ShoppingCart;
+use App\Models\ShoopingCart;
 use Darryldecode\Cart\CartCollection;
 
 class CartStorage {
 
     public function has($key)
     {
-        return ShoppingCart::find($key);
+        return ShoopingCart::find($key);
     }
 
     public function get($key)
     {
         if($this->has($key))
         {
-            return new CartCollection(ShoppingCart::find($key)->cart_data);
+            return new CartCollection(ShoopingCart::find($key)->cart_data);
         }
         else
         {
@@ -26,7 +26,7 @@ class CartStorage {
 
     public function put($key, $value)
     {
-        if($row = ShoppingCart::find($key))
+        if($row = ShoopingCart::find($key))
         {
             // update
             $row->cart_data = $value;
@@ -34,7 +34,7 @@ class CartStorage {
         }
         else
         {
-            ShoppingCart::create([
+            ShoopingCart::create([
                 'id' => $key,
                 'cart_data' => $value
             ]);
