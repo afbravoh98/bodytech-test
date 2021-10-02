@@ -22,4 +22,12 @@ class Order extends Model
         'updated_at',
         'user_id',
     ];
+
+    public function scopeCreatedAt($query, $beginDate = null, $finalDate = null)
+    {
+        if (!$beginDate || !$finalDate){
+            return $query;
+        }
+        return $query->whereBetween('created_at',[$beginDate, $finalDate]);
+    }
 }
