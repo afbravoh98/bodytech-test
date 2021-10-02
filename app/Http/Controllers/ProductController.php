@@ -114,4 +114,24 @@ class ProductController extends Controller
             'message' => 'Producto Eliminado!',
         ]);
     }
+
+    /**
+     * @param ImportProductsRequest $request
+     * @return JsonResponse
+     */
+    public function import(ImportProductsRequest $request): JsonResponse
+    {
+        try{
+            Excel::import(new ProductsImport(), $request->file('file'));
+        }catch (Exception $exception){
+            return response()->error([
+                'message' => 'Error procesando los productos',
+                'error' => $exception->getMessage(),
+            ], HttpResponse::HTTP_BAD_REQUEST);
+        }
+
+        return response()->success([
+            'message' => 'Productos importados correctamente!',
+        ]);
+    }
 }
